@@ -1,6 +1,5 @@
 mod handler;
 mod open_ai;
-mod router;
 
 use axum::{
     extract::Path,
