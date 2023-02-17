@@ -1,21 +1,22 @@
-mod handler;
 mod open_ai;
+mod model_handler;
+mod middleware;
+mod user_auth;
 
 use axum::{
-    extract::Path,
-    routing::{delete, get, post},
     Router,
+    middleware::from_extractor,
 };
 
 #[tokio::main]
 async fn main() {
-    // build our application with a single route
+    // 项目总路由
     let app = Router::new()
-        .route("/", get(|| async { "Hello, World!" }).post(|| {}))
-        .route("/liudosen", delete());
+        .merge(model_handler::user_handler::get_router())
+        .layer(from_extractor::<user_auth::AuthenticationUser>());
 
-    // run it with hyper on localhost:3000
-    axum::Server::bind(&"0.0.0.0:3000".parse().unwrap())
+    // 服务启动
+    axum::Server::bind(&"0.0.0.0:8080".parse().unwrap())
         .serve(app.into_make_service())
         .await
         .unwrap();

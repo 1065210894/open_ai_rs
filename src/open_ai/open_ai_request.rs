@@ -1,5 +1,6 @@
 use async_openai::{types::CreateCompletionRequestArgs, Client};
 
+#[warn(dead_code)]
 pub async fn send_open_ai_request(content: &str) {
     let api_key = "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"; // This secret could be from a file, or environment variable.
     let client = Client::new().with_api_key(api_key);
