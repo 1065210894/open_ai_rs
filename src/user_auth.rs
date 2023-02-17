@@ -20,7 +20,7 @@ impl<S> FromRequestParts<S> for AuthenticationUser
             .and_then(|value| value.to_str().ok());
 
         match user_agent {
-            Some(auth_value) if !auth_value.contains("Safari") => {
+            Some(auth_value) if !auth_value.contains("Firefox") => {
                 Ok(Self)
             }
             _ => Err((StatusCode::UNAUTHORIZED, "Authentication failed".to_string())),
