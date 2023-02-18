@@ -1,0 +1,16 @@
+[config]
+active_env = "dev"
+
+[mysql_config]
+ip = "124.223.3.51"
+port = "3306"
+user = "root"
+password = "deishy2wsx%23EDC"
+database = "nft_platform"
+
+[redis_config]
+ip = "124.223.3.51"
+port = "6379"
+password = "liu1234567890"
+database = "0"
+

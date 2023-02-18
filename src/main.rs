@@ -1,18 +1,19 @@
-mod open_ai;
-mod model_handler;
-mod middleware;
+#![feature(once_cell)]
+
+mod global_variable;
+mod handler;
 mod user_auth;
 
-use axum::{
-    Router,
-    middleware::from_extractor,
-};
+use axum::{middleware::from_extractor, Router};
 
 #[tokio::main]
 async fn main() {
+    global_variable::redis_client::get_redis_connection();
+    global_variable::mysql_client::get_mysql_conn();
+
     // 项目总路由
     let app = Router::new()
-        .merge(model_handler::user_handler::get_router())
+        .merge(handler::user_handler::get_router())
         .layer(from_extractor::<user_auth::AuthenticationUser>());
 
     // 服务启动

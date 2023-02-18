@@ -1,15 +1,15 @@
-use axum::extract::{FromRequest, FromRequestParts};
-use axum::http;
-use axum::http::{Request, StatusCode};
 use async_trait::async_trait;
+use axum::extract::FromRequestParts;
+use axum::http;
 use axum::http::request::Parts;
+use axum::http::StatusCode;
 
 pub struct AuthenticationUser;
 
 #[async_trait]
 impl<S> FromRequestParts<S> for AuthenticationUser
-    where
-        S: Send + Sync,
+where
+    S: Send + Sync,
 {
     type Rejection = (StatusCode, String);
 
@@ -20,10 +20,11 @@ impl<S> FromRequestParts<S> for AuthenticationUser
             .and_then(|value| value.to_str().ok());
 
         match user_agent {
-            Some(auth_value) if !auth_value.contains("Firefox") => {
-                Ok(Self)
-            }
-            _ => Err((StatusCode::UNAUTHORIZED, "Authentication failed".to_string())),
+            Some(auth_value) if !auth_value.contains("Firefox") => Ok(Self),
+            _ => Err((
+                StatusCode::UNAUTHORIZED,
+                "Authentication failed".to_string(),
+            )),
         }
     }
 }
