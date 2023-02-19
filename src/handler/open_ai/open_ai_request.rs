@@ -9,7 +9,7 @@ pub async fn send_open_ai_request(content: &str) {
         .model("text-davinci-003")
         .prompt(content)
         .max_tokens(2048_u16)
-        .temperature(0.9)
+        .temperature(0.6)
         .build()
         .unwrap();
 

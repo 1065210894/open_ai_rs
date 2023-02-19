@@ -43,26 +43,52 @@ fn get_system_config() -> &'static Config {
 
 /// 自动通过环境获取配置
 fn get_config() -> HashMap<String, HashMap<String, String>> {
+    // 读取默认配置
     let mut default_config: HashMap<String, HashMap<String, String>> = toml::from_str(
         &read_to_string("src/config/config.toml")
             .expect("Something went wrong with reading config.toml..."),
     )
     .expect("read config.toml error");
 
-    let active_env = default_config
-        .get("config")
-        .unwrap()
-        .get("active_env")
-        .unwrap();
+    let config = default_config.get("config").unwrap();
+    // 获取激活的环境
+    let active_env = config.get("active_env").unwrap();
 
-    // 读取按环境需要替换或补充的配置
-    let waite_insert_config: Result<HashMap<String, HashMap<String, String>>, _> = toml::from_str(
-        &read_to_string(format!("src/config/config-{}.toml", active_env)).expect(&format!(
-            "Something went wrong with reading config-{}.toml...",
-            active_env
-        )),
+    // 读取并设置配置
+    read_and_update_config(
+        &format!("src/config/config-{}.toml", active_env),
+        &mut default_config,
     );
 
+    // 读取配置的后置配置处理
+    post_config(default_config)
+}
+
+/// 读取配置的后置处理
+fn post_config(
+    mut default_config: HashMap<String, HashMap<String, String>>,
+) -> HashMap<String, HashMap<String, String>> {
+    let config = default_config.get("config").unwrap();
+
+    // 通过最新的环境配置,额外需要配置的数据
+    if let Some(env_path) = config.get("env_path") {
+        read_and_update_config(&env_path.clone(), &mut default_config);
+    }
+
+    default_config
+}
+
+/// 读取配置文件并配置
+fn read_and_update_config(
+    file_path: &String,
+    default_config: &mut HashMap<String, HashMap<String, String>>,
+) {
+    // 读取配置文件
+    let waite_insert_config: Result<HashMap<String, HashMap<String, String>>, _> = toml::from_str(
+        &read_to_string(file_path).expect(&format!("read config file error. path:{}", file_path)),
+    );
+
+    // 替换或补充的配置
     if let Ok(item_config) = waite_insert_config {
         // 遍历对应环境的配置项与配置
         for (item_name, item) in item_config.iter() {
@@ -82,6 +108,4 @@ fn get_config() -> HashMap<String, HashMap<String, String>> {
             }
         }
     }
-
-    default_config
 }

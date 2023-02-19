@@ -6,18 +6,13 @@ static REDIS_CLIENT: OnceLock<Client> = OnceLock::new();
 
 fn init_redis_client() -> &'static Client {
     let config = &get_system_config().redis_config;
-    let new_password = der(&config.password);
     REDIS_CLIENT.get_or_init(|| {
         Client::open(format!(
             "redis://:{}@{}:{}/{}",
-            &new_password, &config.ip, &config.port, &config.database
+            &config.password, &config.ip, &config.port, &config.database
         ))
         .unwrap()
     })
-}
-
-fn der(password: &str) -> String {
-    String::from(password)
 }
 
 pub fn get_redis_connection() -> Connection {

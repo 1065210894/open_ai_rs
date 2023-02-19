@@ -8,20 +8,15 @@ static MYSQL_POOL: OnceLock<Pool> = OnceLock::new();
 fn init_mysql_pool() -> &'static Pool {
     MYSQL_POOL.get_or_init(|| {
         let config = &get_system_config().mysql_config;
-        let password = der(&config.password);
         Pool::new(
             format!(
                 "mysql://{}:{}@{}:{}/{}",
-                &config.user, &password, &config.ip, &config.port, &config.database
+                &config.user, &config.password, &config.ip, &config.port, &config.database
             )
             .as_str(),
         )
         .unwrap()
     })
-}
-
-fn der(password: &str) -> String {
-    String::from(password)
 }
 
 /// 获取mysql的一个连接
