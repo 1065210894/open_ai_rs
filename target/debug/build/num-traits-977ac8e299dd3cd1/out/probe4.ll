@@ -1,16 +1,16 @@
-; ModuleID = 'probe4.da5e3e25-cgu.0'
-source_filename = "probe4.da5e3e25-cgu.0"
+; ModuleID = 'probe4.5007259f-cgu.0'
+source_filename = "probe4.5007259f-cgu.0"
 target datalayout = "e-m:w-p270:32:32-p271:32:32-p272:64:64-i64:64-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-windows-msvc"
 
-@alloc5 = private unnamed_addr constant <{ [77 x i8] }> <{ [77 x i8] c"/rustc/9aa5c24b7d763fb98d998819571128ff2eb8a3ca\\library\\core\\src\\ops\\arith.rs" }>, align 1
+@alloc5 = private unnamed_addr constant <{ [77 x i8] }> <{ [77 x i8] c"/rustc/7aa413d59206fd511137728df3d9e0fd377429bd\\library\\core\\src\\ops\\arith.rs" }>, align 1
 @alloc6 = private unnamed_addr constant <{ ptr, [16 x i8] }> <{ ptr @alloc5, [16 x i8] c"M\00\00\00\00\00\00\00\01\03\00\003\00\00\00" }>, align 8
 @str.0 = internal constant [28 x i8] c"attempt to add with overflow"
 @alloc3 = private unnamed_addr constant <{ [4 x i8] }> <{ [4 x i8] c"\02\00\00\00" }>, align 4
 
 ; <i32 as core::ops::arith::AddAssign<&i32>>::add_assign
 ; Function Attrs: inlinehint uwtable
-define internal void @"_ZN66_$LT$i32$u20$as$u20$core..ops..arith..AddAssign$LT$$RF$i32$GT$$GT$10add_assign17h6e717c9226ed2170E"(ptr align 4 %self, ptr align 4 %other) unnamed_addr #0 {
+define internal void @"_ZN66_$LT$i32$u20$as$u20$core..ops..arith..AddAssign$LT$$RF$i32$GT$$GT$10add_assign17ha807f01637663938E"(ptr align 4 %self, ptr align 4 %other) unnamed_addr #0 {
 start:
   %other1 = load i32, ptr %other, align 4, !noundef !1
   %0 = load i32, ptr %self, align 4, !noundef !1
@@ -26,18 +26,18 @@ bb1:                                              ; preds = %start
 
 panic:                                            ; preds = %start
 ; call core::panicking::panic
-  call void @_ZN4core9panicking5panic17hbf4d7fc6ae646973E(ptr align 1 @str.0, i64 28, ptr align 8 @alloc6) #5
+  call void @_ZN4core9panicking5panic17h5cdb35d9ac1d3f65E(ptr align 1 @str.0, i64 28, ptr align 8 @alloc6) #5
   unreachable
 }
 
 ; probe4::probe
 ; Function Attrs: uwtable
-define void @_ZN6probe45probe17h419f2cd970784f68E() unnamed_addr #1 {
+define void @_ZN6probe45probe17hdef0ce9222c679b4E() unnamed_addr #1 {
 start:
   %x = alloca i32, align 4
   store i32 1, ptr %x, align 4
 ; call <i32 as core::ops::arith::AddAssign<&i32>>::add_assign
-  call void @"_ZN66_$LT$i32$u20$as$u20$core..ops..arith..AddAssign$LT$$RF$i32$GT$$GT$10add_assign17h6e717c9226ed2170E"(ptr align 4 %x, ptr align 4 @alloc3)
+  call void @"_ZN66_$LT$i32$u20$as$u20$core..ops..arith..AddAssign$LT$$RF$i32$GT$$GT$10add_assign17ha807f01637663938E"(ptr align 4 %x, ptr align 4 @alloc3)
   ret void
 }
 
@@ -49,7 +49,7 @@ declare i1 @llvm.expect.i1(i1, i1) #3
 
 ; core::panicking::panic
 ; Function Attrs: cold noinline noreturn uwtable
-declare void @_ZN4core9panicking5panic17hbf4d7fc6ae646973E(ptr align 1, i64, ptr align 8) unnamed_addr #4
+declare void @_ZN4core9panicking5panic17h5cdb35d9ac1d3f65E(ptr align 1, i64, ptr align 8) unnamed_addr #4
 
 attributes #0 = { inlinehint uwtable "target-cpu"="x86-64" }
 attributes #1 = { uwtable "target-cpu"="x86-64" }
