@@ -1,39 +1,18 @@
 # open_ai_service
 
 #### 介绍
-{**以下是 Gitee 平台说明，您可以替换此简介**
-Gitee 是 OSCHINA 推出的基于 Git 的代码托管平台（同时支持 SVN）。专为开发者提供稳定、高效、安全的云端软件开发协作平台
-无论是个人、团队、或是企业，都能够用 Gitee 实现代码托管、项目管理、协作开发。企业项目请看 [https://gitee.com/enterprises](https://gitee.com/enterprises)}
+关于openai的web服务系统
 
-#### 软件架构
-软件架构说明
+### 项目的配置项逻辑
+项目目前使用的配置来源于/src/config目录下的配置
+config为默认配置
+config-dev为本地环境配置
+config-prod为生产配置
+除了这三个配置文件以外还有可以额外装载当前系统环境下的配置文件
+例如 config-dev [config] env_path = "E:\\env.toml"
 
+### docker打包
+docker 打包的逻辑是先用 nasqueron/rust-musl-builder:nightly 镜像打包
+打包后可以在 alpine:latest镜像中部署大好的包
 
-#### 安装教程
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 使用说明
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 参与贡献
-
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
-
-
-#### 特技
-
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+注意：因为可能涉及到当前系统的下的配置文件，在dockerfile中也要将需要的 env.toml文件 copy到镜像中

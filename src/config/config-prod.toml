@@ -1,2 +1,2 @@
 [config]
-env_path = "/root/env.toml"
+env_path = "/usr/src/open_ai_service/env.toml"
