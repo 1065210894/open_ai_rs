@@ -33,7 +33,7 @@ pub struct Config {
 }
 
 /// 获取系统配置项
-fn get_system_config() -> &'static Config {
+pub fn get_system_config() -> &'static Config {
     CONFIG.get_or_init(|| {
         let env_json = json!(get_config());
         println!("当前项目环境配置Json：{}", env_json.to_string());
@@ -48,7 +48,7 @@ fn get_config() -> HashMap<String, HashMap<String, String>> {
         &read_to_string("src/config/config.toml")
             .expect("Something went wrong with reading config.toml..."),
     )
-    .expect("read config.toml error");
+        .expect("read config.toml error");
 
     let config = default_config.get("config").unwrap();
     // 获取激活的环境
@@ -72,7 +72,9 @@ fn post_config(
 
     // 通过最新的环境配置,额外需要配置的数据
     if let Some(env_path) = config.get("env_path") {
-        read_and_update_config(&env_path.clone(), &mut default_config);
+        if env_path != "" {
+            read_and_update_config(&env_path.clone(), &mut default_config);
+        }
     }
 
     default_config

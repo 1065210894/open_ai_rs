@@ -8,8 +8,11 @@ use axum::{middleware::from_extractor, Router};
 
 #[tokio::main]
 async fn main() {
-    global_variable::redis_client::get_redis_connection();
-    global_variable::mysql_client::get_mysql_conn();
+    // global_variable::redis_client::get_redis_connection();
+    // global_variable::mysql_client::get_mysql_conn();
+
+    // 初始化一下系统变量
+    global_variable::get_system_config();
 
     // 项目总路由
     let app = Router::new()

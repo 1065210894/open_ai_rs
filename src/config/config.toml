@@ -1,3 +1,17 @@
 [config]
-active_env = "pord"
+active_env = "dev"
+
+[mysql_config]
+password=""
+ip = ""
+port = ""
+user = ""
+database = ""
+
+[redis_config]
+password=""
+ip = ""
+port = ""
+database = ""
+
 
