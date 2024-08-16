@@ -1,7 +1,30 @@
-# open_ai_service
+# open_ai_rs server
+
+#### Introduction
+About openai's web services system (some features are still under development)
+auxm was used as a web service and the ability to add automatic assembly environment configuration was added.
+Access to chatgpt-3 is provided externally through auxm
+
+### project configuration item logic
+The current configuration used by the project is derived from the configuration in the /src/config directory
+config is the default configuration
+config-dev Indicates the local environment configuration
+config-prod indicates the production configuration
+In addition to these three configuration files, you can also load additional configuration files for the current system environment
+For example, config-dev [config] env_path = "E:\\env.toml"
+
+### docker packing
+The logic of docker packaging is to first package with the nasqueron/rust-musl-builder:nightly image
+After packaging, you can deploy large packages in the alpine:latest image
+
+Note: Because it may involve the configuration file of the current system, copy the required env.toml file into the image in the dockerfile as well
+
+# open_ai_rs server
 
 #### 介绍
-关于openai的web服务系统
+关于openai的web服务系统 （部分功能还在开发中）
+使用到了auxm作为web服务，并且添加自动装配环境配置的能力。
+通过auxm对外提供访问chatgpt-3的能力
 
 ### 项目的配置项逻辑
 项目目前使用的配置来源于/src/config目录下的配置
